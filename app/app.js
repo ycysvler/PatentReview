@@ -1,6 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {Redirect, Route, Switch} from "react-router-dom";
+import { Button } from 'antd';
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -21,7 +22,7 @@ class App extends React.Component {
     }
 
     render() {
-         return (<div>main</div>)
+         return (<div><Button>Default</Button></div>)
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App);

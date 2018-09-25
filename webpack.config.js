@@ -67,8 +67,8 @@ module.exports = {
             title: "控制台 - VMS",
             hash: true,
             inject: false,
-            filename: "console.html",
-            template: "index.html"
+            filename: "index.html",
+            template: "./app/index.html"
         }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
