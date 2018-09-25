@@ -3,12 +3,13 @@
  *
  * Created by zhanghongqing on 2018/6/28.
  */
-
+const fs = require('fs');
 const path = require('path');                               // 基础库
 const moment = require('moment');                           // 时间日期库
 const views = require('koa-views');                         // 模版
 const cors = require('koa2-cors');                          // 引用跨域库
 const Koa = require('koa');                                 // 引用koa框架
+const Router = require('koa-router');                       // 引用路由模块
 const bodyparser = require('koa-bodyparser');               // 加载bodyparser中间件
 const koastatic = require('koa-static');                    // 加载静态资源处理
 const consuming = require('./middleware/consuming');        // 加载计算耗时中间件
@@ -37,10 +38,19 @@ app.use(bodyparser());                                      // 使用ctx.body解
 app.use(consuming);                                         // 计算耗时中间件
 
 
-const root = loader(path.join(__dirname, './routers/api'), '/nsop/hamaster/api');
+const root = loader(path.join(__dirname, './routers/api'), '/api');
+
+
+let home = new Router();                                    // * 构造了一个路由,用于处理 /，直接返回index.html页面
+home.get('/',async(ctx)=>{
+    ctx.response.type = 'html';
+    ctx.response.body = fs.createReadStream(path.join(__dirname, './public/static/dist/index.html'));
+});
+root.use('/', home.routes(), home.allowedMethods());        // * end
+
 app.use(root.routes()).use(root.allowedMethods());          // 加载路由
 
-app.listen(config.server.patent.port);                    // 启动http服务
+app.listen(config.server.patent.port);                      // 启动http服务
 
 log.info({                                                  // 记录系统启动日志
     path: '~',
