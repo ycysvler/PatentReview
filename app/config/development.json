@@ -1,0 +1,8 @@
+{
+  "name": "development",
+  "ws": "ws://localhost:8762",
+  "host": "http://192.168.1.8:8762",
+  "public": "/public",
+  "headers": {},
+  "titleSuffix": " - VMS"
+}
